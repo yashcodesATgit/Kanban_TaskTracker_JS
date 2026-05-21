@@ -1,4 +1,4 @@
-# ⚡ Kanban Flow
+# ⚡ Kanban Flow   (Deployment link - kanbantaskt.netlify.app)
 
 A premium, portfolio-grade responsive Kanban board built with **Vanilla JavaScript**, **Tailwind CSS v4**, and **Vite**. Engineered with fluid animations, intuitive HTML5 drag-and-drop workflow, status-specific colored highlights, and a persistent multi-theme dashboard ideal for developer team organization.
 
