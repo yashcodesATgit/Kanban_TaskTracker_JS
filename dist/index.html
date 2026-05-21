@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanban Board</title>
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="A simple and elegant responsive Kanban board built with HTML, Tailwind CSS, and Vanilla JavaScript. Features HTML5 drag and drop and persistent storage.">
+  <meta name="author" content="Antigravity">
+  <!-- Google Fonts - Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Custom Styles -->
+  <script>
+    // Inline script to prevent theme flash
+    (function() {
+      const theme = localStorage.getItem('theme') || 'dark';
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
+  </script>
+  <script type="module" crossorigin src="/assets/index-Bmcxw7dm.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-c7dGST_g.css">
+</head>
+<body class="font-sans bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-white min-h-screen flex flex-col antialiased relative overflow-x-hidden lg:overflow-y-hidden transition-colors duration-200">
+
+  <!-- Background Ambient Glows -->
+  <div class="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-indigo-500/3 dark:bg-indigo-500/8 blur-[120px] pointer-events-none z-[-10]"></div>
+  <div class="fixed bottom-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-rose-500/3 dark:bg-rose-500/8 blur-[120px] pointer-events-none z-[-10]"></div>
+
+  <!-- App Header -->
+  <header class="max-w-[90vw] mx-auto w-full flex justify-between items-center px-6 py-6 bg-transparent">
+    <div class="logo">
+      <h1 class="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-center gap-2">
+        <span class="bg-indigo-600 w-3 h-6 rounded-md inline-block shadow-[0_0_15px_rgba(79,70,229,0.4)]"></span>
+        Kanban Flow
+      </h1>
+      <p class="text-xs text-zinc-500 mt-1">Sleek task management for developer teams</p>
+    </div>
+    
+    <div class="flex items-center gap-3">
+      <!-- Theme Toggle Button -->
+      <button class="p-2.5 rounded-lg border transition duration-200 cursor-pointer bg-white border-zinc-200 text-zinc-800 hover:bg-zinc-100 hover:border-zinc-300 dark:bg-zinc-900 dark:border-zinc-800 dark:text-zinc-400 dark:hover:text-white dark:hover:bg-zinc-800 active:scale-95 flex items-center justify-center shadow-xs" id="theme-toggle" aria-label="Toggle theme">
+        <!-- Sun icon (visible in dark mode) -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <!-- Moon icon (visible in light mode) -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+
+      <button class="px-5 py-2.5 rounded-lg text-sm font-medium transition duration-200 cursor-pointer bg-white border-zinc-200 text-zinc-900 hover:bg-zinc-100 hover:border-zinc-300 dark:bg-zinc-900 dark:border-zinc-800 dark:text-white dark:hover:bg-zinc-800 dark:hover:border-zinc-700 active:scale-98 shadow-xs" id="add-task-btn" aria-label="Add new task">Add new Task</button>
+    </div>
+  </header>
+
+  <!-- Kanban Board Grid -->
+  <main class="flex-grow w-full overflow-hidden">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-[90vw] mx-auto items-stretch px-6 pb-12 lg:h-[calc(100vh-160px)]">
+      
+      <!-- To Do Column -->
+      <section class="bg-zinc-100/60 border border-zinc-400 dark:bg-zinc-900/40 dark:border-zinc-700 rounded-xl p-5 flex flex-col gap-4 h-[500px] lg:h-full overflow-hidden transition-all duration-200 shadow-sm" data-status="todo" id="column-todo">
+        <header class="flex justify-between items-center pb-1 select-none">
+          <h2 class="text-sm font-bold text-zinc-600 dark:text-zinc-300 uppercase tracking-wider">To Do</h2>
+          <span class="text-xs font-semibold bg-zinc-200/60 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 px-2 py-0.5 rounded-md" id="count-todo">0</span>
+        </header>
+        <div class="flex flex-col gap-3.5 flex-grow overflow-y-auto pr-1" id="list-todo" aria-label="To Do tasks">
+          <!-- Tasks will be injected here dynamically -->
+        </div>
+      </section>
+
+      <!-- In Progress Column -->
+      <section class="bg-zinc-100/60 border border-zinc-400 dark:bg-zinc-900/40 dark:border-zinc-700 rounded-xl p-5 flex flex-col gap-4 h-[500px] lg:h-full overflow-hidden transition-all duration-200 shadow-sm" data-status="inprogress" id="column-inprogress">
+        <header class="flex justify-between items-center pb-1 select-none">
+          <h2 class="text-sm font-bold text-zinc-600 dark:text-zinc-300 uppercase tracking-wider">In Progress</h2>
+          <span class="text-xs font-semibold bg-zinc-200/60 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 px-2 py-0.5 rounded-md" id="count-inprogress">0</span>
+        </header>
+        <div class="flex flex-col gap-3.5 flex-grow overflow-y-auto pr-1" id="list-inprogress" aria-label="In Progress tasks">
+          <!-- Tasks will be injected here dynamically -->
+        </div>
+      </section>
+
+      <!-- Done Column -->
+      <section class="bg-zinc-100/60 border border-zinc-400 dark:bg-zinc-900/40 dark:border-zinc-700 rounded-xl p-5 flex flex-col gap-4 h-[500px] lg:h-full overflow-hidden transition-all duration-200 shadow-sm" data-status="done" id="column-done">
+        <header class="flex justify-between items-center pb-1 select-none">
+          <h2 class="text-sm font-bold text-zinc-600 dark:text-zinc-300 uppercase tracking-wider">Done</h2>
+          <span class="text-xs font-semibold bg-zinc-200/60 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 px-2 py-0.5 rounded-md" id="count-done">0</span>
+        </header>
+        <div class="flex flex-col gap-3.5 flex-grow overflow-y-auto pr-1" id="list-done" aria-label="Done tasks">
+          <!-- Tasks will be injected here dynamically -->
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Add Task Modal -->
+  <div class="fixed inset-0 bg-black/40 dark:bg-black/75 backdrop-blur-xs flex justify-center items-center z-50 opacity-0 pointer-events-none transition-opacity duration-250" id="task-modal" aria-hidden="true" role="dialog">
+    <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl w-11/12 max-w-md p-6 shadow-2xl scale-95 transition-transform duration-250 flex flex-col gap-5 text-zinc-900 dark:text-white" id="modal-container">
+      <header class="flex justify-between items-center">
+        <h3 class="text-lg font-semibold text-zinc-900 dark:text-white">Create New Task</h3>
+        <button class="text-zinc-400 hover:text-zinc-600 dark:hover:text-white text-2xl cursor-pointer leading-none transition-colors" id="close-modal-btn" aria-label="Close modal">&times;</button>
+      </header>
+      <form id="task-form" class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1.5">
+          <label for="task-title" class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Title <span class="text-red-500">*</span></label>
+          <input type="text" id="task-title" class="bg-zinc-50 border border-zinc-200 rounded-lg p-2.5 text-zinc-900 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 dark:bg-zinc-800 dark:border-zinc-700 dark:text-white dark:focus:border-indigo-500 transition duration-200" placeholder="Enter task title" required autocomplete="off">
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label for="task-desc" class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Description</label>
+          <textarea id="task-desc" class="bg-zinc-50 border border-zinc-200 rounded-lg p-2.5 text-zinc-900 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 dark:bg-zinc-800 dark:border-zinc-700 dark:text-white dark:focus:border-indigo-500 transition duration-200 resize-none" placeholder="Enter task description" rows="4"></textarea>
+        </div>
+        
+        <!-- Priority and Tag Grid -->
+        <div class="grid grid-cols-2 gap-4">
+          <div class="flex flex-col gap-1.5">
+            <label for="task-priority" class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Priority</label>
+            <select id="task-priority" class="bg-zinc-50 border border-zinc-200 rounded-lg p-2.5 text-zinc-900 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 dark:bg-zinc-800 dark:border-zinc-700 dark:text-white dark:focus:border-indigo-500 transition duration-200">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <label for="task-tag" class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Tag <span class="text-zinc-600">(Category)</span></label>
+            <input type="text" id="task-tag" class="bg-zinc-50 border border-zinc-200 rounded-lg p-2.5 text-zinc-900 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 dark:bg-zinc-800 dark:border-zinc-700 dark:text-white dark:focus:border-indigo-500 transition duration-200" placeholder="e.g. Backend" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label for="task-status" class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Initial Status</label>
+          <select id="task-status" class="bg-zinc-50 border border-zinc-200 rounded-lg p-2.5 text-zinc-900 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 dark:bg-zinc-800 dark:border-zinc-700 dark:text-white dark:focus:border-indigo-500 transition duration-200">
+            <option value="todo">To Do</option>
+            <option value="inprogress">In Progress</option>
+            <option value="done">Done</option>
+          </select>
+        </div>
+
+        <div class="flex justify-end gap-3 mt-2">
+          <button type="button" class="bg-transparent border border-zinc-200 hover:bg-zinc-100 text-zinc-500 hover:text-zinc-800 dark:border-zinc-750 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-white px-4.5 py-2.5 rounded-lg text-sm font-medium transition duration-200 cursor-pointer" id="cancel-task-btn">Cancel</button>
+          <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4.5 py-2.5 rounded-lg text-sm font-medium transition duration-200 cursor-pointer">Add Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Application Script -->
+</body>
+</html>
