@@ -133,11 +133,11 @@ function createTaskCard(task) {
   // Status-specific borders, gradient background, and glowing shadow colors
   let statusClass = "";
   if (task.status === "todo") {
-    statusClass = "border-l-4 border-indigo-500 bg-gradient-to-br from-zinc-900 via-zinc-900 to-indigo-950/20 hover:to-indigo-950/30 shadow-[0_4px_12px_rgba(99,102,241,0.06)] hover:shadow-[0_8px_24px_rgba(99,102,241,0.15)]";
+    statusClass = "border-l-4 border-indigo-500 shadow-[0_4px_12px_rgba(99,102,241,0.06)] hover:shadow-[0_8px_24px_rgba(99,102,241,0.15)]";
   } else if (task.status === "inprogress") {
-    statusClass = "border-l-4 border-amber-500 bg-gradient-to-br from-zinc-900 via-zinc-900 to-amber-950/20 hover:to-amber-950/30 shadow-[0_4px_12px_rgba(245,158,11,0.06)] hover:shadow-[0_8px_24px_rgba(245,158,11,0.15)]";
+    statusClass = "border-l-4 border-amber-500 shadow-[0_4px_12px_rgba(245,158,11,0.06)] hover:shadow-[0_8px_24px_rgba(245,158,11,0.15)]";
   } else if (task.status === "done") {
-    statusClass = "border-l-4 border-emerald-500 bg-gradient-to-br from-zinc-900 via-zinc-900 to-emerald-950/20 hover:to-emerald-950/30 shadow-[0_4px_12px_rgba(16,185,129,0.06)] hover:shadow-[0_8px_24px_rgba(16,185,129,0.15)]";
+    statusClass = "border-l-4 border-emerald-500 shadow-[0_4px_12px_rgba(16,185,129,0.06)] hover:shadow-[0_8px_24px_rgba(16,185,129,0.15)]";
   }
 
   card.className = `task-card bg-zinc-900 border border-zinc-800/80 rounded-xl p-5 flex flex-col gap-3 cursor-grab select-none hover:-translate-y-0.5 transition-all duration-200 ${statusClass}`;
