@@ -6,10 +6,5 @@
   "scripts": {
     "start": "npx http-server -c-1 .",
     "info": "echo \"This is a static HTML/CSS/JS project — no build step required.\""
-  },
-  "devDependencies": {
-    "@tailwindcss/vite": "^4.3.0",
-    "tailwindcss": "^4.3.0",
-    "vite": "^5.2.11"
   }
 }

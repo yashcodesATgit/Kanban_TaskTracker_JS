@@ -97,10 +97,10 @@ function saveTasks() {
  */
 function getTagClass(tag) {
   const clean = tag.toLowerCase();
-  if (clean === 'backend') return 'bg-indigo-500/10 text-indigo-500 dark:text-indigo-400 border-indigo-500/20';
-  if (clean === 'frontend') return 'bg-pink-500/10 text-pink-500 dark:text-pink-400 border-pink-500/20';
-  if (clean === 'setup') return 'bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 border-emerald-500/20';
-  return 'bg-zinc-100 dark:bg-zinc-800/80 text-zinc-500 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700/50';
+  if (clean === 'backend') return 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20';
+  if (clean === 'frontend') return 'bg-pink-500/10 text-pink-400 border-pink-500/20';
+  if (clean === 'setup') return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+  return 'bg-zinc-800/80 text-zinc-400 border-zinc-700/50';
 }
 
 /**
@@ -118,9 +118,9 @@ function getPriorityDotClass(p) {
  * @param {string} p The priority status
  */
 function getPriorityTextClass(p) {
-  if (p === 'high') return 'text-red-500 dark:text-red-400';
-  if (p === 'medium') return 'text-amber-600 dark:text-amber-400';
-  return 'text-zinc-500 dark:text-zinc-400';
+  if (p === 'high') return 'text-red-400';
+  if (p === 'medium') return 'text-amber-400';
+  return 'text-zinc-400';
 }
 
 /**
@@ -133,14 +133,14 @@ function createTaskCard(task) {
   // Status-specific borders, gradient background, and glowing shadow colors
   let statusClass = "";
   if (task.status === "todo") {
-    statusClass = "border-l-4 border-indigo-500 bg-gradient-to-br from-white via-white to-indigo-50/15 hover:to-indigo-50/30 shadow-[0_4px_12px_rgba(99,102,241,0.03)] hover:shadow-[0_8px_24px_rgba(99,102,241,0.08)] dark:from-zinc-900 dark:via-zinc-900 dark:to-indigo-950/20 dark:hover:to-indigo-950/30 dark:shadow-[0_4px_12px_rgba(99,102,241,0.06)] dark:hover:shadow-[0_8px_24px_rgba(99,102,241,0.15)]";
+    statusClass = "border-l-4 border-indigo-500 bg-gradient-to-br from-zinc-900 via-zinc-900 to-indigo-950/20 hover:to-indigo-950/30 shadow-[0_4px_12px_rgba(99,102,241,0.06)] hover:shadow-[0_8px_24px_rgba(99,102,241,0.15)]";
   } else if (task.status === "inprogress") {
-    statusClass = "border-l-4 border-amber-500 bg-gradient-to-br from-white via-white to-amber-50/15 hover:to-amber-50/30 shadow-[0_4px_12px_rgba(245,158,11,0.03)] hover:shadow-[0_8px_24px_rgba(245,158,11,0.08)] dark:from-zinc-900 dark:via-zinc-900 dark:to-amber-950/20 dark:hover:to-amber-950/30 dark:shadow-[0_4px_12px_rgba(245,158,11,0.06)] dark:hover:shadow-[0_8px_24px_rgba(245,158,11,0.15)]";
+    statusClass = "border-l-4 border-amber-500 bg-gradient-to-br from-zinc-900 via-zinc-900 to-amber-950/20 hover:to-amber-950/30 shadow-[0_4px_12px_rgba(245,158,11,0.06)] hover:shadow-[0_8px_24px_rgba(245,158,11,0.15)]";
   } else if (task.status === "done") {
-    statusClass = "border-l-4 border-emerald-500 bg-gradient-to-br from-white via-white to-emerald-50/15 hover:to-emerald-50/30 shadow-[0_4px_12px_rgba(16,185,129,0.03)] hover:shadow-[0_8px_24px_rgba(16,185,129,0.08)] dark:from-zinc-900 dark:via-zinc-900 dark:to-emerald-950/20 dark:hover:to-emerald-950/30 dark:shadow-[0_4px_12px_rgba(16,185,129,0.06)] dark:hover:shadow-[0_8px_24px_rgba(16,185,129,0.15)]";
+    statusClass = "border-l-4 border-emerald-500 bg-gradient-to-br from-zinc-900 via-zinc-900 to-emerald-950/20 hover:to-emerald-950/30 shadow-[0_4px_12px_rgba(16,185,129,0.06)] hover:shadow-[0_8px_24px_rgba(16,185,129,0.15)]";
   }
 
-  card.className = `task-card bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800/80 rounded-xl p-5 flex flex-col gap-3 cursor-grab select-none hover:-translate-y-0.5 transition-all duration-200 ${statusClass}`;
+  card.className = `task-card bg-zinc-900 border border-zinc-800/80 rounded-xl p-5 flex flex-col gap-3 cursor-grab select-none hover:-translate-y-0.5 transition-all duration-200 ${statusClass}`;
   card.setAttribute('draggable', 'true');
   card.dataset.id = task.id;
 
@@ -252,11 +252,11 @@ function renderBoard() {
     const listContainer = lists[status];
     if (count[status] === 0) {
       const emptyState = document.createElement('div');
-      emptyState.className = 'flex flex-col items-center justify-center border border-dashed border-zinc-200 dark:border-zinc-800 rounded-xl py-12 px-4 text-center text-zinc-400 dark:text-zinc-500 gap-2 select-none h-full bg-white/40 dark:bg-transparent';
+      emptyState.className = 'flex flex-col items-center justify-center border border-dashed border-zinc-800 rounded-xl py-12 px-4 text-center text-zinc-500 gap-2 select-none h-full bg-transparent';
       emptyState.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-zinc-400 dark:text-zinc-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01"/></svg>
-        <span class="text-xs font-semibold text-zinc-600 dark:text-zinc-400">Column Empty</span>
-        <span class="text-[10px] text-zinc-400 dark:text-zinc-600">Drag items here or click create</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-zinc-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01"/></svg>
+        <span class="text-xs font-semibold text-zinc-400">Column Empty</span>
+        <span class="text-[10px] text-zinc-600">Drag items here or click create</span>
       `;
       listContainer.appendChild(emptyState);
     }
@@ -434,17 +434,17 @@ Object.keys(lists).forEach(status => {
   columnElement.addEventListener('dragenter', (e) => {
     e.preventDefault();
     columnElement.classList.remove('border-transparent');
-    columnElement.classList.add('border-zinc-350', 'bg-zinc-200/30', 'dark:border-zinc-700', 'dark:bg-zinc-800/30');
+    columnElement.classList.add('border-zinc-700', 'bg-zinc-800/30');
   });
 
   columnElement.addEventListener('dragleave', () => {
     columnElement.classList.add('border-transparent');
-    columnElement.classList.remove('border-zinc-350', 'bg-zinc-200/30', 'dark:border-zinc-700', 'dark:bg-zinc-800/30');
+    columnElement.classList.remove('border-zinc-700', 'bg-zinc-800/30');
   });
 
   columnElement.addEventListener('drop', () => {
     columnElement.classList.add('border-transparent');
-    columnElement.classList.remove('border-zinc-350', 'bg-zinc-200/30', 'dark:border-zinc-700', 'dark:bg-zinc-800/30');
+    columnElement.classList.remove('border-zinc-700', 'bg-zinc-800/30');
   });
 });
 
