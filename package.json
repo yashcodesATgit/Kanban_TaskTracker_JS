@@ -4,9 +4,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "start": "npx http-server -c-1 .",
+    "info": "echo \"This is a static HTML/CSS/JS project — no build step required.\""
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.0",

@@ -448,18 +448,6 @@ Object.keys(lists).forEach(status => {
   });
 });
 
-// Theme Toggle Handler
-const themeToggleBtn = document.getElementById('theme-toggle');
-if (themeToggleBtn) {
-  themeToggleBtn.addEventListener('click', () => {
-    document.documentElement.classList.toggle('dark');
-    const isDark = document.documentElement.classList.contains('dark');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    console.log('[Theme Toggler] Toggled dark mode:', isDark);
-  });
-} else {
-  console.error('[Theme Toggler] Element #theme-toggle not found in DOM.');
-}
 
 // App Initialization
 renderBoard();
